@@ -9,8 +9,8 @@
           <i class="fa fa-chart-line"></i> <span>Dashboard</span>
         </a>
       </li>
-      <li class="">
-        <a href="">
+      <li class="{{ route('emp.punches') == url()->current() ? 'active' : ''}}">
+        <a href="{{ route('emp.punches') }}">
           <i class="fa fa-stream"></i> <span>My Punches</span>
         </a>
       </li>

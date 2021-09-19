@@ -5,7 +5,13 @@
 @endsection
 
 @section('style')
-
+	<style>
+		.round-btn {
+			height: 100px;
+			width: 100px;
+			border-radius: 50%;
+		}
+	</style>
 @endsection
 
 @section('header')
@@ -30,9 +36,8 @@
 			<div class="col-md-12">
 				@include('includes.all')
 			</div>
-			<div class="col-md-4">
-				<div id="demo"></div>
-				<button class="btn btn-primary" onclick="getLocation()">Try</button>
+			<div class="col-sm-offset-5 col-sm-2 text-center">
+					<button class="round-btn btn btn-primary" id="punch" onclick="getLocation()"><i class="fa fa-map-marker"></i> Punch</button>
 			</div>
 		</div>
 	</section>
@@ -40,15 +45,19 @@
 @endsection
 
 @section('script')
+	<script src="{{ asset('js/jquery.js') }}"></script>
 	<script src="{{ asset('js/sweetalert.js') }}"></script>
 	<script>
-		// var x = document.getElementById("demo");
-
 		function getLocation() {
 		  if (navigator.geolocation) {
 		    navigator.geolocation.getCurrentPosition(showPosition, showError);
 		  } else { 
-		    x.innerHTML = "Geolocation is not supported by this browser.";
+	      Swal.fire({
+				  type: 'error',
+				  title: 'Geolocation Error',
+				  text: 'Geolocation is not supported by this browser.',
+				  // footer: '<a href="">Why do I have this issue?</a>'
+				})
 		  }
 		}
 
@@ -57,6 +66,35 @@
 		  // "<br>Longitude: " + position.coords.longitude;
 		  console.log('Latitude:' + position.coords.latitude);
 		  console.log('Longitude:' + position.coords.longitude);
+		  $.ajax({
+		  	url: "/e/geoloc/punch/" + position.coords.latitude + "/" + position.coords.longitude,
+		  	type: "GET",
+          success: function() {
+            Swal.fire({
+              title: 'Alrigh!',
+              text: "",
+              type: 'success',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Close'
+            });
+
+            // Show Time in or time out
+            // if time in and timeout on day disable button
+          },
+          error: function() {
+            Swal.fire({
+              title: 'Error Occured! Tray Again.',
+              text: "",
+              type: 'error',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Close'
+            });
+          }
+		  });
 		}
 
 		function showError(error) {
@@ -66,7 +104,7 @@
 		      // x.innerHTML = "User denied the request for Geolocation."
 		      console.log("User denied the request for Geolocation.");
 		      Swal.fire({
-					  icon: 'error',
+					  type: 'error',
 					  title: 'Permission Denied',
 					  text: 'User denied the request for Geolocation.',
 					  // footer: '<a href="">Why do I have this issue?</a>'
@@ -75,14 +113,32 @@
 		    case error.POSITION_UNAVAILABLE:
 		      // x.innerHTML = "Location information is unavailable."
 		      console.log("Location information is unavailable.");
+		      Swal.fire({
+					  type: 'error',
+					  title: 'Position Unavailable',
+					  text: 'Location information is unavailable.',
+					  // footer: '<a href="">Why do I have this issue?</a>'
+					})
 		      break;
 		    case error.TIMEOUT:
 		      // x.innerHTML = "The request to get user location timed out."
 		      console.log("The request to get user location timed out.");
+		      Swal.fire({
+					  type: 'error',
+					  title: 'Timeout Error',
+					  text: 'The request to get user location timed out.',
+					  // footer: '<a href="">Why do I have this issue?</a>'
+					})
 		      break;
 		    case error.UNKNOWN_ERROR:
 		      // x.innerHTML = "An unknown error occurred."
 		      console.log("An unknown error occurred.");
+		      Swal.fire({
+					  type: 'error',
+					  title: 'Unknown Error',
+					  text: 'An unknown error occurred.',
+					  // footer: '<a href="">Why do I have this issue?</a>'
+					});
 		      break;
 		  }
 		}

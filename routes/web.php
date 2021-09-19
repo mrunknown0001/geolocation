@@ -47,4 +47,8 @@ Route::group(['prefix' => 'm', 'middleware' => 'manager'], function () {
 Route::group(['prefix' => 'e', 'middleware' => 'employee'], function () {
 	# User Dashboard
 	Route::get('/dashboard', 'EmployeeController@dashboard')->name('emp.dashboard');
+	# Log User Location and Time
+	Route::get('/geoloc/punch/{lat}/{lon}', 'EmployeeController@punch')->name('emp.punch');
+
+	Route::get('/punches', 'EmployeeController@punches')->name('emp.punches');
 });
