@@ -31,7 +31,7 @@ class EmployeeController extends Controller
     	if($request->ajax()) {
     		$log = new EmployeeLog();
     		$log->user_id = Auth::user()->id;
-    		// in or out
+    		// in or out condition
     		$log->latitude = $lat;
     		$log->longitude = $lon;
 

@@ -66,35 +66,45 @@
 		  // "<br>Longitude: " + position.coords.longitude;
 		  console.log('Latitude:' + position.coords.latitude);
 		  console.log('Longitude:' + position.coords.longitude);
-		  $.ajax({
-		  	url: "/e/geoloc/punch/" + position.coords.latitude + "/" + position.coords.longitude,
-		  	type: "GET",
-          success: function() {
-            Swal.fire({
-              title: 'Alrigh!',
-              text: "",
-              type: 'success',
-              showCancelButton: false,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Close'
-            });
+		  if(position.coords.latitude == NaN || position.coords.longitude == NaN) {
+	      Swal.fire({
+				  type: 'error',
+				  title: 'Unknown Error',
+				  text: 'An unknown error occurred.',
+				  // footer: '<a href="">Why do I have this issue?</a>'
+				});
+		  }
+		  else {
+			  $.ajax({
+			  	url: "/e/geoloc/punch/" + position.coords.latitude + "/" + position.coords.longitude,
+			  	type: "GET",
+	          success: function() {
+	            Swal.fire({
+	              title: 'Alrigh!',
+	              text: "",
+	              type: 'success',
+	              showCancelButton: false,
+	              confirmButtonColor: '#3085d6',
+	              cancelButtonColor: '#d33',
+	              confirmButtonText: 'Close'
+	            });
 
-            // Show Time in or time out
-            // if time in and timeout on day disable button
-          },
-          error: function() {
-            Swal.fire({
-              title: 'Error Occured! Tray Again.',
-              text: "",
-              type: 'error',
-              showCancelButton: false,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Close'
-            });
-          }
-		  });
+	            // Show Time in or time out
+	            // if time in and timeout on day disable button
+	          },
+	          error: function() {
+	            Swal.fire({
+	              title: 'Error Occured! Tray Again.',
+	              text: "",
+	              type: 'error',
+	              showCancelButton: false,
+	              confirmButtonColor: '#3085d6',
+	              cancelButtonColor: '#d33',
+	              confirmButtonText: 'Close'
+	            });
+	          }
+			  });
+			}
 		}
 
 		function showError(error) {
@@ -118,7 +128,7 @@
 					  title: 'Position Unavailable',
 					  text: 'Location information is unavailable.',
 					  // footer: '<a href="">Why do I have this issue?</a>'
-					})
+					});
 		      break;
 		    case error.TIMEOUT:
 		      // x.innerHTML = "The request to get user location timed out."
