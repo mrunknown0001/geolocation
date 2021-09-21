@@ -32,6 +32,7 @@ class EmployeeController extends Controller
     		$log = new EmployeeLog();
     		$log->user_id = Auth::user()->id;
     		// in or out condition
+    		$log->type = GC::punchType(Auth::user()->id);
     		$log->latitude = $lat;
     		$log->longitude = $lon;
 
@@ -39,11 +40,11 @@ class EmployeeController extends Controller
     			return 'ok';
     		}
     		else {
-    			return abort(500);
+    			return 'error1';
     		}
     	}
     	else {
-    		return abort(500);
+    		return 'error2';
     	}
     }
 

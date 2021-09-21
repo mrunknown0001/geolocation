@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\User;
+use App\EmployeeLog;
+use DB;
+
 class GeneralController extends Controller
 {
     /**
@@ -18,5 +22,25 @@ class GeneralController extends Controller
     	$action = "<a href='https://www.google.com/search?q=" . $lat . "%2C+" . $lon . "' target='_blank'>Location</a>";
 
     	return $action;
+    }
+
+
+
+    /**
+     * Time in and out 
+     */
+    public static function punchType($id)
+    {
+    	$log = EmployeeLog::where('user_id', $id)
+    					->whereDate('created_at', DB::raw('CURDATE()'))
+    					->first();
+
+    	if(empty($log)) {
+    		return 'In';
+    	}
+    	else {
+    		return 'Out';
+    	}
+
     }
 }
