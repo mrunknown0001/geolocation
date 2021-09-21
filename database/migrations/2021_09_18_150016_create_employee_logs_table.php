@@ -19,6 +19,8 @@ class CreateEmployeeLogsTable extends Migration
             $table->string('type', 10)->nullable()->default('in'); // in or out
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
+            $table->string('ip_address')->nullable();
+            $table->string('mac_address')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamps();
         });

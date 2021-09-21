@@ -35,16 +35,17 @@ class EmployeeController extends Controller
     		$log->type = GC::punchType(Auth::user()->id);
     		$log->latitude = $lat;
     		$log->longitude = $lon;
+    		$log->ip_address = $request->ip();
 
     		if($log->save()) {
     			return 'ok';
     		}
     		else {
-    			return 'error1';
+    			return 'error saving log';
     		}
     	}
     	else {
-    		return 'error2';
+    		return 'ajax error';
     	}
     }
 
