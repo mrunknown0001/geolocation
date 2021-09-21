@@ -41,6 +41,10 @@ Route::group(['prefix' => 'a', 'middleware' => 'admin'], function () {
 Route::group(['prefix' => 'm', 'middleware' => 'manager'], function () {
 	# User Dashboard
 	Route::get('/dashboard', 'UserController@dashboard')->name('user.dashboard');
+	# Manager Employees
+	Route::get('/employees', 'UserController@employees')->name('user.employees');
+	# Manager under employees punches
+	Route::get('/punches', 'UserController@punches')->name('user.punches');
 });
 
 # User Route Group

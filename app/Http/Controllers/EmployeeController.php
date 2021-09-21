@@ -18,6 +18,8 @@ class EmployeeController extends Controller
      */
     public function dashboard()
     {
+    	// get login and logout today
+    	// if logout if available or out, disable punch with error do on front end
     	return view('employee.dashboard');
     }
 
@@ -31,11 +33,13 @@ class EmployeeController extends Controller
     	if($request->ajax()) {
     		$log = new EmployeeLog();
     		$log->user_id = Auth::user()->id;
+    		$log->manager_id = Auth::user()->manager->id;
     		// in or out condition
     		$log->type = GC::punchType(Auth::user()->id);
     		$log->latitude = $lat;
     		$log->longitude = $lon;
-    		$log->ip_address = $request->ip();
+    		// $log->ip_address = $request->ip();
+    		$log->ip_address = json_encode($request->ips());
 
     		if($log->save()) {
     			return 'ok';

@@ -96,7 +96,7 @@
           error: function(error) {
           	console.log(error);
             Swal.fire({
-              title: 'Error Occured! Tray Again.aaa',
+              title: 'Error Occured! Tray Again.',
               text: "",
               type: 'error',
               showCancelButton: false,

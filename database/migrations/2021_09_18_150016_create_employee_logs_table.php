@@ -16,6 +16,7 @@ class CreateEmployeeLogsTable extends Migration
         Schema::create('employee_logs', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->nullable()->unsigned();
+            $table->bigInteger('manager_id')->nullable()->unsigned();
             $table->string('type', 10)->nullable()->default('in'); // in or out
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();

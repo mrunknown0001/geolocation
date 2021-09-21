@@ -51,6 +51,14 @@ class UsersTableSeeder extends Seeder
                 'role_id' => 4, // Employee
                 'manager_id' => 2,
                 'password' => bcrypt('password')
+            ],
+            [
+                'first_name' => 'Jeff',
+                'last_name' => 'Montiano',
+                'email' => 'jmontiano@bfcgroup.org',
+                'role_id' => 4, // Employee
+                'manager_id' => 2,
+                'password' => bcrypt('password')
             ]
         ]);
     }
