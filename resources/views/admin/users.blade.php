@@ -39,6 +39,8 @@
 		          <tr>
 		            <th scope="col">First Name</th>
 		            <th scope="col">Last Name</th>
+		            <th scope="col">Type</th>
+		            <th scope="col">Status</th>
 		            <th scope="col">Action</th>
 		          </tr>
 		        </thead>
@@ -60,12 +62,14 @@
 		        processing: true,
 		        serverSide: true,
 		        columnDefs: [
-		          { className: "dt-center", targets: [ 0, 1, 2 ] }
+		          { className: "dt-center", targets: [ 0, 1, 2, 3, 4 ] }
 		        ],
 		        ajax: "{{ route('admin.users') }}",
 		        columns: [
 		            {data: 'first_name', name: 'first_name'},
 		            {data: 'last_name', name: 'last_name'},
+		            {data: 'type', name: 'type'},
+		            {data: 'active', name: 'active'},
 		            {data: 'action', name: 'action', orderable: false, searchable: false},
 		        ]
 	      });

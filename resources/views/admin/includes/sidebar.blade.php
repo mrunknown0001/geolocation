@@ -27,6 +27,11 @@
           <i class="fa fa-calendar"></i> <span>Schedule</span>
         </a>
       </li>
+      <li class="{{ route('admin.punches') == url()->current() ? 'active' : ''}}">
+        <a href="{{ route('admin.punches') }}">
+          <i class="fa fa-map-marker"></i> <span>Punches</span>
+        </a>
+      </li>
     </ul>
   </section>
 </aside>

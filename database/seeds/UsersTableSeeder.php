@@ -21,21 +21,13 @@ class UsersTableSeeder extends Seeder
         		'password' => bcrypt('password')
         	],
         	[
-        		'first_name' => 'Adam',
-        		'last_name' => 'Trinidad',
-        		'email' => 'm.trinidad@bfcgroup.org',
+                'first_name' => 'Jeff',
+                'last_name' => 'Montiano',
+                'email' => 'jmontiano@bfcgroup.org',
         		'role_id' => 3, // Manager
                 'manager_id' => null,
         		'password' => bcrypt('password')
         	],
-            [
-                'first_name' => 'John',
-                'last_name' => 'Doe',
-                'email' => 'john@doe.com',
-                'role_id' => 4, // Employee
-                'manager_id' => 2,
-                'password' => bcrypt('password')
-            ],
             [
                 'first_name' => 'Kim',
                 'last_name' => 'Bacani',
@@ -53,9 +45,17 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt('password')
             ],
             [
-                'first_name' => 'Jeff',
-                'last_name' => 'Montiano',
-                'email' => 'jmontiano@bfcgroup.org',
+                'first_name' => 'Adam',
+                'last_name' => 'Trinidad',
+                'email' => 'm.trinidad@bfcgroup.org',
+                'role_id' => 4, // Employee
+                'manager_id' => 2,
+                'password' => bcrypt('password')
+            ],
+            [
+                'first_name' => 'John',
+                'last_name' => 'Doe',
+                'email' => 'j.doe@bfcgroup.org',
                 'role_id' => 4, // Employee
                 'manager_id' => 2,
                 'password' => bcrypt('password')

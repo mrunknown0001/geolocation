@@ -9,6 +9,7 @@ use DB;
 use Auth;
 use Hash;
 use DataTables;
+use App\EmployeeLog;
 use App\Http\Controllers\GeneralController as GC;
 
 class AdminController extends Controller
@@ -73,6 +74,8 @@ class AdminController extends Controller
                     $data->push([
                         'first_name' => $j->first_name,
                         'last_name' => $j->last_name,
+                        'type' => GC::getUserType($j->role_id),
+                        'active' => $j->active == 1 ? 'Active' : 'Inactive',
                         'action' => GC::adminUserAction($j->id, $j->first_name . ' ' . $j->last_name)
                     ]);
                 }
@@ -150,5 +153,41 @@ class AdminController extends Controller
         $user->save();
 
         return redirect()->back()->with('success', 'User Updated!');
+    }
+
+
+    public function punches (Request $request)
+    {
+        if($request->ajax()) {
+            $punches = EmployeeLog::all();
+ 
+            $data = collect();
+            if(count($punches) > 0) {
+                foreach($punches as $j) {
+                    $data->push([
+                        'emp' => $j->employee->first_name . ' ' . $j->employee->last_name,
+                        'type' => $j->type,
+                        'date_time' => date('F j, Y h:i:s A', strtotime($j->created_at)),
+                        'ip' => $j->ip_address,
+                        'action' => GC::getLocation($j->latitude, $j->longitude)
+                    ]);
+                }
+            }
+            return DataTables::of($data)
+                    ->rawColumns(['action'])
+                    ->make(true);
+
+        }
+
+        return view('admin.punches');
+    }
+
+
+
+    public function purgeLogs()
+    {
+        EmployeeLog::truncate();
+
+        return 'ok';
     }
 }

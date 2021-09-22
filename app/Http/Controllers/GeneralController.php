@@ -61,4 +61,21 @@ class GeneralController extends Controller
     {
         return "<button id='updateuser' data-id='" . $id . "' data-text='Do you want to update user: " . $name . "?' class='btn btn-info btn-xs'><i class='fa fa-pen'></i> Update</button>";
     }
+
+
+    public static function getUserType($type)
+    {
+        if($type == 1) {
+            return "Super Admin";
+        }
+        else if($type == 2) {
+            return "Admin";
+        }
+        else if ($type == 3) {
+            return "Manager";
+        }
+        else {
+            return 'Employee';
+        }
+    }
 }

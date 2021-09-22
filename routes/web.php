@@ -49,6 +49,12 @@ Route::group(['prefix' => 'a', 'middleware' => 'admin'], function () {
 	# Schedule Setting
 	Route::get('/schedule', 'ScheduleController@schedule')->name('schedule');
 	Route::post('/schedule', 'ScheduleController@updateSchedule')->name('update.schedule');
+
+	# Punches
+	Route::get('/punches', 'AdminController@punches')->name('admin.punches');
+
+	# Purge Logs
+	Route::get('/purge/logs', 'AdminController@purgeLogs')->name('admin.purge.logs');
 });
 
 
