@@ -73,7 +73,7 @@ class AdminController extends Controller
                     $data->push([
                         'first_name' => $j->first_name,
                         'last_name' => $j->last_name,
-                        'action' => 'admin action'
+                        'action' => GC::adminUserAction($j->id, $j->first_name . ' ' . $j->last_name)
                     ]);
                 }
             }
@@ -82,5 +82,73 @@ class AdminController extends Controller
                     ->make(true);
         }
         return view('admin.users');
+    }
+
+
+
+    /**
+     * Add user
+     */
+    public function addUser()
+    {
+        $managers = User::where('role_id', 3)->get();
+        return view('admin.user-add', compact('managers'));
+    }
+
+
+    public function postAddUser(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'role' => 'required|min:1|max:4',
+            'password' => 'required',
+        ]);
+
+        $user = new User();
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->role_id = $request->role;
+        $user->manager_id = $request->manager;
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return redirect()->back()->with('success', 'User Added!');
+    }
+
+
+
+    public function updateUser($id)
+    {
+        $user = User::findorfail($id);
+        $managers = User::where('role_id', 3)->get();
+        return view('admin.user-update', compact('managers', 'user'));
+    }
+
+
+    public function postUpdateUser(Request $request, $id)
+    {
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'role' => 'required|min:1|max:4',
+        ]);
+
+        $user = User::findorfail($id);
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->role_id = $request->role;
+        $user->manager_id = $request->manager;
+        if($request->password != null || $request->password != '') {
+            $user->password = bcrypt($request->password);
+        }
+        $user->active = $request->active != NULL && $request->active == 'on' ? 1 : 0;
+        $user->save();
+
+        return redirect()->back()->with('success', 'User Updated!');
     }
 }

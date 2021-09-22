@@ -20,7 +20,7 @@
 @section('content')
 	<div class="content-wrapper">
 	<section class="content-header">
-		<h1>Users <a href=""><i class="fa fa-plus"></i></a></h1>
+		<h1>Users <a href="{{ route('admin.add.user') }}"><i class="fa fa-plus"></i></a></h1>
 		<ol class="breadcrumb">
 			<li><a href="javascript:void(0)"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li class="active">@yield('title')</li>
@@ -70,5 +70,37 @@
 		        ]
 	      });
 		});
+
+	    $(document).on('click', '#updateuser', function (e) {
+	        e.preventDefault();
+	        var id = $(this).data('id');
+	        var text = $(this).data('text');
+	        Swal.fire({
+	          title: 'Update User?',
+	          text: text,
+	          type: 'question',
+	          showCancelButton: true,
+	          confirmButtonColor: '#3085d6',
+	          cancelButtonColor: '#d33',
+	          confirmButtonText: 'Continue'
+	        }).then((result) => {
+	          if (result.value) {
+	            // view here
+	            window.location.replace("/a/user/update/" + id);
+
+	          }
+	          else {
+	            Swal.fire({
+	              title: 'Action Cancelled',
+	              text: "",
+	              type: 'info',
+	              showCancelButton: false,
+	              confirmButtonColor: '#3085d6',
+	              cancelButtonColor: '#d33',
+	              confirmButtonText: 'Close'
+	            });
+	          }
+	        });
+	    });
 	</script>
 @endsection

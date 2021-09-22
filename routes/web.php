@@ -39,10 +39,16 @@ Route::group(['prefix' => 'a', 'middleware' => 'admin'], function () {
 	Route::get('/users', 'AdminController@users')->name('admin.users');
 
 	# Add user
+	Route::get('/user/add', 'AdminController@addUser')->name('admin.add.user');
+	Route::post('/user/add', 'AdminController@postAddUser')->name('admin.post.add.user');
 
+	# Update user
+	Route::get('/user/update/{id}', 'AdminController@updateUser')->name('admin.update.user');
+	Route::post('/user/update/{id}', 'AdminController@postUpdateUser')->name('admin.post.update.user');
 
 	# Schedule Setting
 	Route::get('/schedule', 'ScheduleController@schedule')->name('schedule');
+	Route::post('/schedule', 'ScheduleController@updateSchedule')->name('update.schedule');
 });
 
 

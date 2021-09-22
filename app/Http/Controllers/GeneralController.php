@@ -52,4 +52,13 @@ class GeneralController extends Controller
     	}
 
     }
+
+
+    /**
+     * Admin User Action
+     */
+    public static function adminUserAction($id, $name)
+    {
+        return "<button id='updateuser' data-id='" . $id . "' data-text='Do you want to update user: " . $name . "?' class='btn btn-info btn-xs'><i class='fa fa-pen'></i> Update</button>";
+    }
 }
