@@ -26,7 +26,7 @@
               <li class="user-body">
                 <div class="row">
                   <div class="col-md-12">
-                    <a href="" class="btn btn-default btn-sm btn-block"><i class="fa fa-user"></i> Profile</a>
+                    <a href="{{ route('emp.profile') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-user"></i> Profile</a>
                   </div>
                   <div class="col-md-12"></div>
                   <div class="col-md-12">

@@ -49,10 +49,15 @@ Route::group(['prefix' => 'm', 'middleware' => 'manager'], function () {
 
 # User Route Group
 Route::group(['prefix' => 'e', 'middleware' => 'employee'], function () {
+	# PRofile
+	Route::get('/profile', 'EmployeeController@profile')->name('emp.profile');
 	# User Dashboard
 	Route::get('/dashboard', 'EmployeeController@dashboard')->name('emp.dashboard');
 	# Log User Location and Time
 	Route::get('/geoloc/punch/{lat}/{lon}', 'EmployeeController@punch')->name('emp.punch');
-
+	# My PUnches
 	Route::get('/punches', 'EmployeeController@punches')->name('emp.punches');
+	# AJAX Data
+	Route::get('/in-today', 'EmployeeController@inToday')->name('emp.in.today');
+	Route::get('/out-today', 'EmployeeController@outToday')->name('emp.out.today');
 });

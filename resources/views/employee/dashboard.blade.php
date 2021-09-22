@@ -36,8 +36,17 @@
 			<div class="col-md-12">
 				@include('includes.all')
 			</div>
+		</div>
+		<div class="row">
 			<div class="col-sm-offset-5 col-sm-2 text-center">
-					<button class="round-btn btn btn-primary" id="punch" onclick="getLocation()"><i class="fa fa-map-marker"></i> Punch</button>
+				<button class="round-btn btn btn-primary" @if(!empty($out)) disabled @endif id="punch" onclick="getLocation()"><i class="fa fa-map-marker"></i> Punch</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-offset-4 col-md-4 text-center">
+				<hr>
+				<p>Time In Today:  <b><span id="in">@if(!empty($in))  {{ date('H:i:s A', strtotime($in->created_at)) }} @else No Log @endif</span></b></p>
+				<p>Time Out Today: <b><span id="out">@if(!empty($out))  {{ date('H:i:s A', strtotime($out->created_at)) }} @else No Log @endif</span></b></p>
 			</div>
 		</div>
 	</section>
@@ -92,6 +101,25 @@
 
             // Show Time in or time out
             // if time in and timeout on day disable button
+            if(data == 'in') {
+						  $.ajax({
+						  	url: "/e/in-today",
+						  	type: "GET",
+			          success: function(data) {
+			          	$('#in').html(data);
+			          }
+			        });
+            }
+            if(data == 'out') {
+						  $.ajax({
+						  	url: "/e/out-today",
+						  	type: "GET",
+			          success: function(data) {
+			          	$('#out').html(data);
+			          }
+			        });
+            	$("#punch").attr("disabled", true);
+            }
           },
           error: function(error) {
           	console.log(error);

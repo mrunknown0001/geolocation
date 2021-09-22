@@ -9,18 +9,38 @@ use Auth;
 
 use DataTables;
 
+use DB;
+
 use App\Http\Controllers\GeneralController as GC;
 
 class EmployeeController extends Controller
 {
+
+    /**
+     * Profile
+     */
+    public function profile()
+    {
+        return view('employee.profile');
+    }
+
     /**
      * Employee Dashboard
      */
     public function dashboard()
     {
     	// get login and logout today
-    	// if logout if available or out, disable punch with error do on front end
-    	return view('employee.dashboard');
+        $in = EmployeeLog::where('user_id', Auth::user()->id)
+                        ->where('type', 'In')
+                        ->whereDate('created_at', DB::raw('CURDATE()'))
+                        ->first();
+        $out = EmployeeLog::where('user_id', Auth::user()->id)
+                        ->where('type', 'Out')
+                        ->whereDate('created_at', DB::raw('CURDATE()'))
+                        ->first();
+        // if logout if available or out, disable punch with error do on front end
+
+    	return view('employee.dashboard', compact('in', 'out'));
     }
 
 
@@ -31,6 +51,14 @@ class EmployeeController extends Controller
     public function punch(Request $request, $lat, $lon)
     {
     	if($request->ajax()) {
+            $out = EmployeeLog::where('user_id', Auth::user()->id)
+                            ->where('type', 'Out')
+                            ->whereDate('created_at', DB::raw('CURDATE()'))
+                            ->first();
+            if(!empty($out)) {
+                return abort(500);
+            }
+
     		$log = new EmployeeLog();
     		$log->user_id = Auth::user()->id;
     		$log->manager_id = Auth::user()->manager->id;
@@ -42,7 +70,10 @@ class EmployeeController extends Controller
     		$log->ip_address = json_encode($request->ips());
 
     		if($log->save()) {
-    			return 'ok';
+                if($log->type == 'Out') {
+                    return 'out';
+                }
+    			return 'in';
     		}
     		else {
     			return 'error saving log';
@@ -79,5 +110,29 @@ class EmployeeController extends Controller
         }
 
     	return view('employee.punches');
+    }
+
+
+
+    /**
+     * AJAX Data
+     */
+    public function inToday()
+    {
+        $in = EmployeeLog::where('user_id', Auth::user()->id)
+                        ->where('type', 'In')
+                        ->whereDate('created_at', DB::raw('CURDATE()'))
+                        ->first();
+        return date('H:i:s A', strtotime($in->created_at));
+    }
+
+
+    public function outToday()
+    {
+        $out = EmployeeLog::where('user_id', Auth::user()->id)
+                        ->where('type', 'Out')
+                        ->whereDate('created_at', DB::raw('CURDATE()'))
+                        ->first();
+        return date('H:i:s A', strtotime($out->created_at));
     }
 }
