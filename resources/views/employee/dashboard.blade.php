@@ -11,6 +11,25 @@
 			width: 100px;
 			border-radius: 50%;
 		}
+
+    .overlay{
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        background: rgba(255,255,255,0.8) url("/gif/loading-buffering.gif") center no-repeat;
+    }
+    /* Turn off scrollbar when body element has the loading class */
+    body.loading{
+        overflow: hidden;   
+    }
+    /* Make spinner image visible when body element has the loading class */
+    body.loading .overlay{
+        display: block;
+    }
 	</style>
 @endsection
 
@@ -49,6 +68,7 @@
 				<p>Time Out Today: <b><span id="out">@if(!empty($out))  {{ date('H:i:s A', strtotime($out->created_at)) }} @else No Log @endif</span></b></p>
 			</div>
 		</div>
+		<div class="overlay"></div>
 	</section>
 </div>
 @endsection
@@ -59,8 +79,10 @@
 	<script>
 		function getLocation() {
 		  if (navigator.geolocation) {
+		  	$("body").addClass("loading"); 
 		    navigator.geolocation.getCurrentPosition(showPosition, showError);
 		  } else { 
+		  	$("body").removeClass("loading"); 
 	      Swal.fire({
 				  type: 'error',
 				  title: 'Geolocation Error',
@@ -76,6 +98,7 @@
 		  // console.log('Latitude:' + position.coords.latitude);
 		  // console.log('Longitude:' + position.coords.longitude);
 		  if(position.coords.latitude == NaN || position.coords.longitude == NaN) {
+		  	$("body").removeClass("loading"); 
 	      Swal.fire({
 				  type: 'error',
 				  title: 'Unknown Error',
@@ -89,6 +112,7 @@
 			  	type: "GET",
           success: function(data) {
           	console.log(data);
+          	$("body").removeClass("loading"); 
             Swal.fire({
               title: 'Alrigh!',
               text: "",
@@ -123,6 +147,7 @@
           },
           error: function(error) {
           	console.log(error);
+          	$("body").removeClass("loading"); 
             Swal.fire({
               title: 'Error Occured! Tray Again.',
               text: "",
@@ -143,6 +168,7 @@
 		    case error.PERMISSION_DENIED:
 		      // x.innerHTML = "User denied the request for Geolocation."
 		      console.log("User denied the request for Geolocation.");
+		      $("body").removeClass("loading"); 
 		      Swal.fire({
 					  type: 'error',
 					  title: 'Permission Denied',
@@ -153,6 +179,7 @@
 		    case error.POSITION_UNAVAILABLE:
 		      // x.innerHTML = "Location information is unavailable."
 		      console.log("Location information is unavailable.");
+		      $("body").removeClass("loading"); 
 		      Swal.fire({
 					  type: 'error',
 					  title: 'Position Unavailable',
@@ -163,6 +190,7 @@
 		    case error.TIMEOUT:
 		      // x.innerHTML = "The request to get user location timed out."
 		      console.log("The request to get user location timed out.");
+		      $("body").removeClass("loading"); 
 		      Swal.fire({
 					  type: 'error',
 					  title: 'Timeout Error',
@@ -173,6 +201,7 @@
 		    case error.UNKNOWN_ERROR:
 		      // x.innerHTML = "An unknown error occurred."
 		      console.log("An unknown error occurred.");
+		      $("body").removeClass("loading"); 
 		      Swal.fire({
 					  type: 'error',
 					  title: 'Unknown Error',
