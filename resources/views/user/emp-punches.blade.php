@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-	Employees
+	{{ $emp->first_name . ' ' . $emp->last_name }} - Punches
 @endsection
 
 @section('style')
@@ -20,7 +20,7 @@
 @section('content')
 	<div class="content-wrapper">
 	<section class="content-header">
-		<h1>Employees</h1>
+		<h1>{{ $emp->first_name . ' ' . $emp->last_name }} - Punches</h1>
 		<ol class="breadcrumb">
 			<li><a href="javascript:void(0)"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li class="active">@yield('title')</li>
@@ -29,16 +29,18 @@
 	<section class="content">
 		<div class="row">
 			<div class="col-md-12">
+				<p><a href="{{ route('user.employees') }}" class="btn btn-primary btn-xs"><i class="fa fa-arrow-left"></i> Back to Employee List</a></p>
 				@include('includes.all')
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-		      <table id="employees" class="table cell-border compact stripe hover" width="99%">
+		      <table id="punches" class="table cell-border compact stripe hover" width="99%">
 			      <thead>
 		          <tr>
-		            <th scope="col">First Name</th>
-		            <th scope="col">Last Name</th>
+		            <th scope="col">Type</th>
+		            <th scope="col">Date & Time</th>
+		            <th scope="col">IP</th>
 		            <th scope="col">Action</th>
 		          </tr>
 		        </thead>
@@ -56,17 +58,18 @@
 
 	<script>
 		$(document).ready(function () {
-			let jotable = $('#employees').DataTable({
+			let jotable = $('#punches').DataTable({
 		        processing: true,
 		        serverSide: true,
 		        columnDefs: [
-		          { className: "dt-center", targets: [ 0, 1, 2 ] }
+		          { className: "dt-center", targets: [ 0, 1, 2, 3 ] }
 		        ],
-		        ajax: "{{ route('user.employees') }}",
+		        ajax: "{{ route('user.show.emp.log', $emp->id) }}",
 		        columns: [
-		            {data: 'first_name', name: 'first_name'},
-		            {data: 'last_name', name: 'last_name'},
-		            {data: 'action', name: 'action', orderable: false, searchable: false},
+	            {data: 'type', name: 'type'},
+	            {data: 'date_time', name: 'date_time'},
+	            {data: 'ip', name: 'ip'},
+	            {data: 'action', name: 'action', orderable: false, searchable: false},
 		        ]
 	      });
 		});

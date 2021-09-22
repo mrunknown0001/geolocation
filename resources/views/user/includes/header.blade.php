@@ -20,17 +20,17 @@
                 <img src="{{ asset('img/avatar.jpg') }}" class="img-circle" alt="User Image">
                 <p>
                   {{ Auth::user()->first_name }}
-                  <small>User</small>
+                  <small>Manager</small>
                 </p>
               </li>
               <li class="user-body">
                 <div class="row">
                   <div class="col-md-12">
-                    <a href="" class="btn btn-default btn-sm btn-block"><i class="fa fa-user"></i> Profile</a>
+                    <a href="{{ route('user.profile') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-user"></i> Profile</a>
                   </div>
                   <div class="col-md-12"></div>
                   <div class="col-md-12">
-                    <a href="" class="btn btn-default btn-sm btn-block"><i class="fa fa-key"></i> Change Password</a>
+                    <a href="{{ route('user.change.password') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-key"></i> Change Password</a>
                   </div>
                 </div>
               </li>

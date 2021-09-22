@@ -30,7 +30,7 @@
                   </div>
                   <div class="col-md-12"></div>
                   <div class="col-md-12">
-                    <a href="" class="btn btn-default btn-sm btn-block"><i class="fa fa-key"></i> Change Password</a>
+                    <a href="{{ route('emp.change.password') }}" class="btn btn-default btn-sm btn-block"><i class="fa fa-key"></i> Change Password</a>
                   </div>
                 </div>
               </li>

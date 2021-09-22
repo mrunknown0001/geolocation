@@ -31,6 +31,14 @@
 				@include('includes.all')
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<h3>My Information</h3>
+				<p>Firt Name: <b>{{ Auth::user()->first_name }}</b></p>
+				<p>Last Name: <b>{{ Auth::user()->last_name }}</b></p>
+				<p>Email: <b>{{ Auth::user()->email }}</b></p>
+			</div>
+		</div>
 	</section>
 </div>
 @endsection

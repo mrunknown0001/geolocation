@@ -26,6 +26,15 @@ class GeneralController extends Controller
 
 
 
+    public static function showLogs($id)
+    {
+        $action = '<a href="' . route('user.show.emp.log', $id) . '">Show Logs</a>';
+
+        return $action;
+    }
+
+
+
     /**
      * Time in and out 
      */

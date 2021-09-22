@@ -9,10 +9,49 @@ use App\User;
 use App\EmployeeLog;
 use Auth;
 use DB;
+use Hash;
 use App\Http\Controllers\GeneralController as GC;
 
 class UserController extends Controller
 {
+
+    /**
+     * Profile
+     */
+    public function profile()
+    {
+        return view('user.profile');
+    }
+
+    /**
+     * Change Password
+     */
+    public function changePassword()
+    {
+        return view('user.change-password');
+    }
+
+
+    public function postChangePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+        $user = Auth::user();
+        if(Hash::check($request->current_password, $user->password)) {
+            $user->password = bcrypt($request->new_password);
+            $user->save();
+            return redirect()->back()->with('success', 'Password Changed!');
+
+        }
+        else {
+            return redirect()->back()->with('error', 'Current Password Invalid!');
+        }
+    }
+
+
     /**
      * User Dashboard
      */
@@ -21,6 +60,57 @@ class UserController extends Controller
     	return view('user.dashboard');
     }
 
+
+
+    public function employees (Request $request)
+    {
+        if($request->ajax()) {
+            $employees = User::where('manager_id', Auth::user()->id)->get();
+ 
+            $data = collect();
+            if(count($employees) > 0) {
+                foreach($employees as $j) {
+                    $data->push([
+                        'first_name' => $j->first_name,
+                        'last_name' => $j->last_name,
+                        'action' => GC::showLogs($j->id)
+                    ]);
+                }
+            }
+            return DataTables::of($data)
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('user.employees');
+    }
+
+
+    public function employeeShowLog(Request $request, $id)
+    {
+        if($request->ajax()) {
+            $punches = EmployeeLog::where('manager_id', Auth::user()->id)
+                                ->where('user_id', $id)
+                                ->get();
+ 
+            $data = collect();
+            if(count($punches) > 0) {
+                foreach($punches as $j) {
+                    $data->push([
+                        'type' => $j->type,
+                        'date_time' => date('F j, Y h:i:s A', strtotime($j->created_at)),
+                        'ip' => $j->ip_address,
+                        'action' => GC::getLocation($j->latitude, $j->longitude)
+                    ]);
+                }
+            }
+            return DataTables::of($data)
+                    ->rawColumns(['action'])
+                    ->make(true);
+
+        }
+        $emp = User::findorfail($id);
+        return view('user.emp-punches', ['emp' => $emp]);
+    }
 
 
     public function punches(Request $request)

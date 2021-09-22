@@ -10,6 +10,7 @@ use Auth;
 use DataTables;
 
 use DB;
+use Hash;
 
 use App\Http\Controllers\GeneralController as GC;
 
@@ -22,6 +23,35 @@ class EmployeeController extends Controller
     public function profile()
     {
         return view('employee.profile');
+    }
+
+
+    /**
+     * Change Password
+     */
+    public function changePassword()
+    {
+        return view('employee.change-password');
+    }
+
+
+    public function postChangePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+        $user = Auth::user();
+        if(Hash::check($request->current_password, $user->password)) {
+            $user->password = bcrypt($request->new_password);
+            $user->save();
+            return redirect()->back()->with('success', 'Password Changed!');
+
+        }
+        else {
+            return redirect()->back()->with('error', 'Current Password Invalid!');
+        }
     }
 
     /**

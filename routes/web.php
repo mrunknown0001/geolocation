@@ -39,10 +39,16 @@ Route::group(['prefix' => 'a', 'middleware' => 'admin'], function () {
 
 # User Route Group
 Route::group(['prefix' => 'm', 'middleware' => 'manager'], function () {
+	# PRofile
+	Route::get('/profile', 'UserController@profile')->name('user.profile');
+	# Change Password
+	Route::get('/change-password', 'UserController@changePassword')->name('user.change.password');
+	Route::post('/change-password', 'UserController@postChangePassword')->name('user.post.change.password');
 	# User Dashboard
 	Route::get('/dashboard', 'UserController@dashboard')->name('user.dashboard');
 	# Manager Employees
 	Route::get('/employees', 'UserController@employees')->name('user.employees');
+	Route::get('/employee/{id}/show/logs', 'UserController@employeeShowLog')->name('user.show.emp.log');
 	# Manager under employees punches
 	Route::get('/punches', 'UserController@punches')->name('user.punches');
 });
@@ -51,6 +57,9 @@ Route::group(['prefix' => 'm', 'middleware' => 'manager'], function () {
 Route::group(['prefix' => 'e', 'middleware' => 'employee'], function () {
 	# PRofile
 	Route::get('/profile', 'EmployeeController@profile')->name('emp.profile');
+	# Change Password
+	Route::get('/change-password', 'EmployeeController@changePassword')->name('emp.change.password');
+	Route::post('/change-password', 'EmployeeController@postChangePassword')->name('emp.post.change.password');
 	# User Dashboard
 	Route::get('/dashboard', 'EmployeeController@dashboard')->name('emp.dashboard');
 	# Log User Location and Time
