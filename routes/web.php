@@ -32,8 +32,17 @@ Route::group(['prefix' => 'a', 'middleware' => 'admin'], function () {
 	Route::get('/dashboard/', 'AdminController@dashboard')->name('admin.dashboard');
 	# Admin Profile
 	Route::get('/profile', 'AdminController@profile')->name('admin.profile');
+	# Change Password
+	Route::get('/change-password', 'AdminController@changePassword')->name('admin.change.password');
+	Route::post('/change-password', 'AdminController@postChangePassword')->name('admin.post.change.password');
 	# All Users
 	Route::get('/users', 'AdminController@users')->name('admin.users');
+
+	# Add user
+
+
+	# Schedule Setting
+	Route::get('/schedule', 'ScheduleController@schedule')->name('schedule');
 });
 
 

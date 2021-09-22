@@ -21,6 +21,12 @@
           {{-- <li><a href=""><i class="fa fa-arrow-circle-right"></i> Others</a></li> --}}
         </ul>
       </li>
+
+      <li class="{{ route('schedule') == url()->current() ? 'active' : ''}}">
+        <a href="{{ route('schedule') }}">
+          <i class="fa fa-calendar"></i> <span>Schedule</span>
+        </a>
+      </li>
     </ul>
   </section>
 </aside>

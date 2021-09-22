@@ -5,7 +5,8 @@
 @endsection
 
 @section('style')
-
+  <link href="{{ asset('datatables/jquery.dataTables.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('header')
@@ -19,7 +20,7 @@
 @section('content')
 	<div class="content-wrapper">
 	<section class="content-header">
-		<h1>Users</h1>
+		<h1>Users <a href=""><i class="fa fa-plus"></i></a></h1>
 		<ol class="breadcrumb">
 			<li><a href="javascript:void(0)"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li class="active">@yield('title')</li>
@@ -31,10 +32,43 @@
 				@include('includes.all')
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-12">
+		      <table id="users" class="table cell-border compact stripe hover" width="99%">
+			      <thead>
+		          <tr>
+		            <th scope="col">First Name</th>
+		            <th scope="col">Last Name</th>
+		            <th scope="col">Action</th>
+		          </tr>
+		        </thead>
+		      </table>
+			</div>
+		</div>
 	</section>
 </div>
 @endsection
 
 @section('script')
+	<script src="{{ asset('js/dataTables.js') }}"></script>
+	<script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+	<script src="{{ asset('js/sweetalert.js') }}"></script>
 
+	<script>
+		$(document).ready(function () {
+			let jotable = $('#users').DataTable({
+		        processing: true,
+		        serverSide: true,
+		        columnDefs: [
+		          { className: "dt-center", targets: [ 0, 1, 2 ] }
+		        ],
+		        ajax: "{{ route('admin.users') }}",
+		        columns: [
+		            {data: 'first_name', name: 'first_name'},
+		            {data: 'last_name', name: 'last_name'},
+		            {data: 'action', name: 'action', orderable: false, searchable: false},
+		        ]
+	      });
+		});
+	</script>
 @endsection
