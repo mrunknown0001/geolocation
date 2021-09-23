@@ -72,8 +72,11 @@ Route::group(['prefix' => 'm', 'middleware' => 'manager'], function () {
 	Route::get('/employee/{id}/show/logs', 'UserController@employeeShowLog')->name('user.show.emp.log');
 	# Manager under employees punches
 	Route::get('/punches', 'UserController@punches')->name('user.punches');
+	# Maps
+	Route::get('/map/location/{lat}/{lon}', 'UserController@mapLocation')->name('user.map.location');
 	# Export Logs
 	Route::get('/export/logs', 'UserController@exportLogs')->name('user.export.logs');
+
 });
 
 # User Route Group

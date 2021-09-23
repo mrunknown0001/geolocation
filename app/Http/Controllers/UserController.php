@@ -151,4 +151,11 @@ class UserController extends Controller
         return Excel::download($logs, $filename);
     }
 
+
+
+    public function mapLocation($lat, $lon)
+    {
+        return view('user.maps', compact('lat', 'lon'));
+    }
+
 }
