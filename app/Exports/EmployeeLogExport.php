@@ -29,7 +29,6 @@ class EmployeeLogExport implements FromArray, WithHeadings, WithStyles, ShouldAu
 
     	foreach($this->data as $a) {
     		array_push($d, [
-    			'',
     			GC::getLastName($a['user_id']),
     			GC::getFirstName($a['user_id']),
     			$a['type'],
@@ -46,7 +45,6 @@ class EmployeeLogExport implements FromArray, WithHeadings, WithStyles, ShouldAu
     public function headings(): array
     {
         return [
-        	'ID',
             'Last Name',
             'First Name',
             'Type',

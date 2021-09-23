@@ -7,19 +7,26 @@ use Illuminate\Http\Request;
 use App\User;
 use App\EmployeeLog;
 use DB;
+use Auth;
 
 class GeneralController extends Controller
 {
     /**
      * Get Location
      */
-    public static function getLocation($lat, $lon)
+    public static function getLocation($lat, $lon, $id)
     {
     	// Latlon.net
     	// $action = "<a href='https://www.latlong.net/c/?lat=" . $lat . "&long=" . $lon . "' target='_blank'>Location</a>";
     	//<a href='" . route('user.map.location', ['lat' => $lat, 'lon' => $lon]) . "'>Maps</a>
     	// google search :)
-    	$action = "<a href='https://www.google.com/search?q=" . $lat . "%2C+" . $lon . "' target='_blank'>Location</a> ";
+    	// $action = "<a href='https://www.google.com/search?q=" . $lat . "%2C+" . $lon . "' target='_blank'>Location</a>";
+        if(Auth::user()->role_id == 3) {
+            $action = "<a href='" . route('user.map.location', ['id' => $id]) . "'>Maps</a>";
+        }
+        else {
+            $action = "<a href='https://www.google.com/search?q=" . $lat . "%2C+" . $lon . "' target='_blank'>Location</a>";
+        }
 
     	return $action;
     }

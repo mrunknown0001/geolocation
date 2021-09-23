@@ -130,7 +130,7 @@ class EmployeeController extends Controller
                     $data->push([
                         'type' => $j->type,
                         'date_time' => date('F j, Y h:i:s A', strtotime($j->created_at)),
-                        'action' => GC::getLocation($j->latitude, $j->longitude)
+                        'action' => GC::getLocation($j->latitude, $j->longitude, $j->id)
                     ]);
                 }
             }

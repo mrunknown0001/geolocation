@@ -102,7 +102,7 @@ class UserController extends Controller
                         'date_time' => date('F j, Y h:i:s A', strtotime($j->created_at)),
                         'uuid' => $j->uuid,
                         'ip' => $j->ip_address,
-                        'action' => GC::getLocation($j->latitude, $j->longitude)
+                        'action' => GC::getLocation($j->latitude, $j->longitude, $j->id)
                     ]);
                 }
             }
@@ -130,7 +130,7 @@ class UserController extends Controller
                         'date_time' => date('F j, Y h:i:s A', strtotime($j->created_at)),
                         'uuid' => $j->uuid,
                         'ip' => $j->ip_address,
-                        'action' => GC::getLocation($j->latitude, $j->longitude)
+                        'action' => GC::getLocation($j->latitude, $j->longitude, $j->id)
                     ]);
                 }
             }
@@ -153,9 +153,15 @@ class UserController extends Controller
 
 
 
-    public function mapLocation($lat, $lon)
+    public function mapLocation($id)
     {
-        return view('user.location', ['lat' => $lat, 'lon' => $lon]);
+        if(Auth::user()->role_id == 4) {
+            return redirect()->back()->with('info', 'User Not Able to View Map.');
+        }
+        $log = EmployeeLog::findorfail($id);
+        $lat = $log->latitude;
+        $lon = $log->longitude;
+        return view('user.location', ['lat' => $lat, 'lon' => $lon, 'log' => $log]);
     }
 
 }
