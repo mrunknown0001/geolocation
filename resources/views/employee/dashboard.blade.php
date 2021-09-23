@@ -84,10 +84,15 @@
 	<script src="{{ asset('js/sweetalert.js') }}"></script>
 	<script src="{{ asset('js/device-uuid.min.js') }}"></script>
 	<script>
+		var options = {
+		  enableHighAccuracy: true,
+		  timeout: 5000,
+		  maximumAge: 0
+		};
 		function getLocation() {
 		  if (navigator.geolocation) {
 		  	$("body").addClass("loading"); 
-		    navigator.geolocation.getCurrentPosition(showPosition, showError);
+		    navigator.geolocation.getCurrentPosition(showPosition, showError, options);
 		  } else { 
 		  	$("body").removeClass("loading"); 
 	      Swal.fire({
