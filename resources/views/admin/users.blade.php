@@ -61,6 +61,7 @@
 			let jotable = $('#users').DataTable({
 		        processing: true,
 		        serverSide: true,
+		         scrollX: true,
 		        columnDefs: [
 		          { className: "dt-center", targets: [ 0, 1, 2, 3, 4 ] }
 		        ],

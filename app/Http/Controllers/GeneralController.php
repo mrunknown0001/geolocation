@@ -78,4 +78,18 @@ class GeneralController extends Controller
             return 'Employee';
         }
     }
+
+
+
+    public static function getFirstName($id)
+    {
+        $user = User::find($id);
+        return strtoupper($user->first_name);
+    }
+
+    public static function getLastName($id)
+    {
+        $user = User::find($id);
+        return strtoupper($user->last_name);
+    }
 }

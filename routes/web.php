@@ -72,6 +72,8 @@ Route::group(['prefix' => 'm', 'middleware' => 'manager'], function () {
 	Route::get('/employee/{id}/show/logs', 'UserController@employeeShowLog')->name('user.show.emp.log');
 	# Manager under employees punches
 	Route::get('/punches', 'UserController@punches')->name('user.punches');
+	# Export Logs
+	Route::get('/export/logs', 'UserController@exportLogs')->name('user.export.logs');
 });
 
 # User Route Group
@@ -84,7 +86,7 @@ Route::group(['prefix' => 'e', 'middleware' => 'employee'], function () {
 	# User Dashboard
 	Route::get('/dashboard', 'EmployeeController@dashboard')->name('emp.dashboard');
 	# Log User Location and Time
-	Route::get('/geoloc/punch/{lat}/{lon}', 'EmployeeController@punch')->name('emp.punch');
+	Route::get('/geoloc/punch/{lat}/{lon}/{uuid}/{du}', 'EmployeeController@punch')->name('emp.punch');
 	# My PUnches
 	Route::get('/punches', 'EmployeeController@punches')->name('emp.punches');
 	# AJAX Data

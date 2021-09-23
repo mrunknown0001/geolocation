@@ -21,7 +21,8 @@ class CreateEmployeeLogsTable extends Migration
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->string('ip_address')->nullable();
-            $table->string('mac_address')->nullable();
+            $table->string('uuid')->nullable();
+            $table->text('du')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamps();
         });

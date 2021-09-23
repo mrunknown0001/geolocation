@@ -58,7 +58,13 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-offset-5 col-sm-2 text-center">
-				<button class="round-btn btn btn-primary" @if(!empty($out)) disabled @endif id="punch" onclick="getLocation()"><i class="fa fa-map-marker"></i> Punch</button>
+				@if(empty($in))
+					<p id="changepunchin">
+						<button id='punchin' data-text='Are you sure you want to time in?' class="round-btn btn btn-primary"><i class="fa fa-map-marker"></i> Punch In</button>
+					</p>
+				@else
+					<button id='punchout' @if(!empty($out)) disabled @endif data-text='Are you sure you want to time out?' class="round-btn btn btn-primary"><i class="fa fa-map-marker"></i> Punch Out</button>
+				@endif
 			</div>
 		</div>
 		<div class="row">
@@ -76,6 +82,7 @@
 @section('script')
 	<script src="{{ asset('js/jquery.js') }}"></script>
 	<script src="{{ asset('js/sweetalert.js') }}"></script>
+	<script src="{{ asset('js/device-uuid.min.js') }}"></script>
 	<script>
 		function getLocation() {
 		  if (navigator.geolocation) {
@@ -97,6 +104,30 @@
 		  // "<br>Longitude: " + position.coords.longitude;
 		  // console.log('Latitude:' + position.coords.latitude);
 		  // console.log('Longitude:' + position.coords.longitude);
+		  var uuid = new DeviceUUID().get();
+		  var du = new DeviceUUID().parse();
+	    var dua = [
+	        du.language,
+	        du.platform,
+	        du.os,
+	        du.cpuCores,
+	        du.isAuthoritative,
+	        du.silkAccelerated,
+	        du.isKindleFire,
+	        du.isDesktop,
+	        du.isMobile,
+	        du.isTablet,
+	        du.isWindows,
+	        du.isLinux,
+	        du.isLinux64,
+	        du.isMac,
+	        du.isiPad,
+	        du.isiPhone,
+	        du.isiPod,
+	        du.isSmartTV,
+	        du.pixelDepth,
+	        du.isTouchScreen
+	    ];
 		  if(position.coords.latitude == NaN || position.coords.longitude == NaN) {
 		  	$("body").removeClass("loading"); 
 	      Swal.fire({
@@ -108,13 +139,13 @@
 		  }
 		  else {
 			  $.ajax({
-			  	url: "/e/geoloc/punch/" + position.coords.latitude + "/" + position.coords.longitude,
+			  	url: "/e/geoloc/punch/" + position.coords.latitude + "/" + position.coords.longitude + "/" + uuid + "/" + dua,
 			  	type: "GET",
           success: function(data) {
           	console.log(data);
           	$("body").removeClass("loading"); 
             Swal.fire({
-              title: 'Alrigh!',
+              title: 'Alright!',
               text: "",
               type: 'success',
               showCancelButton: false,
@@ -131,6 +162,7 @@
 						  	type: "GET",
 			          success: function(data) {
 			          	$('#in').html(data);
+			          	$('#changepunchin').html("<button id='punchout' data-text='Are you sure you want to time out?' class='round-btn btn btn-primary'><i class='fa fa-map-marker'></i> Punch Out</button>");
 			          }
 			        });
             }
@@ -142,7 +174,7 @@
 			          	$('#out').html(data);
 			          }
 			        });
-            	$("#punch").attr("disabled", true);
+            	$("#punchout").attr("disabled", true);
             }
           },
           error: function(error) {
@@ -211,5 +243,66 @@
 		      break;
 		  }
 		}
+
+
+    $(document).on('click', '#punchin', function (e) {
+        e.preventDefault();
+        var text = $(this).data('text');
+        Swal.fire({
+          title: 'Confirm Time In?',
+          text: text,
+          type: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Confirm'
+        }).then((result) => {
+          if (result.value) {
+          	getLocation();
+
+          }
+          else {
+            Swal.fire({
+              title: 'Action Cancelled',
+              text: "",
+              type: 'info',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Close'
+            });
+          }
+        });
+    });
+    $(document).on('click', '#punchout', function (e) {
+        e.preventDefault();
+        var text = $(this).data('text');
+        Swal.fire({
+          title: 'Confirm Time Out?',
+          text: text,
+          type: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Confirm'
+        }).then((result) => {
+          if (result.value) {
+          	getLocation();
+
+          }
+          else {
+            Swal.fire({
+              title: 'Action Cancelled',
+              text: "",
+              type: 'info',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Close'
+            });
+          }
+        });
+    });
 	</script>
+
 @endsection

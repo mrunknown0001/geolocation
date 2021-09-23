@@ -35,7 +35,7 @@
 		<div class="row">
 			<div class="col-md-12">
 					<p><button id="purgelogs" data-text="Are you sure you want to purge all logs? This action can't be undone." class="btn btn-danger">!! Purge Logs !!</button></p>
-		      <table id="punches" class="table cell-border compact stripe hover" width="99%">
+		      <table id="punches" class="table cell-border compact stripe hover display nowrap" width="99%">
 			      <thead>
 		          <tr>
 		          	<th scope="col">Employee</th>
@@ -62,6 +62,7 @@
 			let jotable = $('#punches').DataTable({
 		        processing: true,
 		        serverSide: true,
+            scrollX: true,
 		        columnDefs: [
 		          { className: "dt-center", targets: [ 0, 1, 2, 3, 4 ] }
 		        ],

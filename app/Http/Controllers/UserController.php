@@ -11,6 +11,8 @@ use Auth;
 use DB;
 use Hash;
 use App\Http\Controllers\GeneralController as GC;
+use Excel;
+use App\Exports\EmployeeLogExport;
 
 class UserController extends Controller
 {
@@ -139,5 +141,12 @@ class UserController extends Controller
     	return view('user.punches');
     }
 
+
+    public function exportLogs()
+    {
+        $logs = new EmployeeLogExport();
+        $filename = date('F j, Y', strtotime(now())) . '.xlsx';
+        return Excel::download($logs, $filename);
+    }
 
 }

@@ -78,7 +78,7 @@ class EmployeeController extends Controller
     /**
      * Pucnh Method : In or Out
      */
-    public function punch(Request $request, $lat, $lon)
+    public function punch(Request $request, $lat, $lon, $uuid, $du)
     {
     	if($request->ajax()) {
             $out = EmployeeLog::where('user_id', Auth::user()->id)
@@ -98,7 +98,8 @@ class EmployeeController extends Controller
     		$log->longitude = $lon;
     		// $log->ip_address = $request->ip();
     		$log->ip_address = json_encode($request->ips());
-
+            $log->uuid = $uuid;
+            $log->du = $du;
     		if($log->save()) {
                 if($log->type == 'Out') {
                     return 'out';

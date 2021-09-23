@@ -34,17 +34,18 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-		      <table id="punches" class="table cell-border compact stripe hover" width="99%">
-			      <thead>
-		          <tr>
-		          	<th scope="col">Employee</th>
-		            <th scope="col">Type</th>
-		            <th scope="col">Date & Time</th>
-		            <th scope="col">IP</th>
-		            <th scope="col">Action</th>
-		          </tr>
-		        </thead>
-		      </table>
+				<p><a href="{{ route('user.export.logs') }}" class="btn btn-primary"><i class="fa fa-download"></i> Export Logs</a></p>
+	      <table id="punches" class="table cell-border compact stripe hover display nowrap" width="99%">
+		      <thead>
+	          <tr>
+	          	<th scope="col">Employee</th>
+	            <th scope="col">Type</th>
+	            <th scope="col">Date & Time</th>
+	            <th scope="col">IP</th>
+	            <th scope="col">Action</th>
+	          </tr>
+	        </thead>
+	      </table>
 			</div>
 		</div>
 	</section>
@@ -61,6 +62,7 @@
 			let jotable = $('#punches').DataTable({
 		        processing: true,
 		        serverSide: true,
+		        scrollX: true,
 		        columnDefs: [
 		          { className: "dt-center", targets: [ 0, 1, 2, 3 ] }
 		        ],

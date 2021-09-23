@@ -32,7 +32,7 @@
 				@include('includes.all')
 			</div>
 			<div class="col-md-12">
-		      <table id="punches" class="table cell-border compact stripe hover" width="99%">
+		      <table id="punches" class="table cell-border compact stripe hover display nowrap" width="99%">
 			      <thead>
 		          <tr>
 		            <th scope="col">Type</th>
@@ -58,6 +58,7 @@
 			let jotable = $('#punches').DataTable({
 		        processing: true,
 		        serverSide: true,
+		        scrollX: true,
 		        columnDefs: [
 		          { className: "dt-center", targets: [ 0, 1, 2 ] }
 		        ],
