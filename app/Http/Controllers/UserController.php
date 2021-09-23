@@ -155,7 +155,7 @@ class UserController extends Controller
 
     public function mapLocation($lat, $lon)
     {
-        return view('user.maps', compact('lat', 'lon'));
+        return view('user.maps', ['lat' => $lat, 'lon' => $lon]);
     }
 
 }
