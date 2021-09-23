@@ -17,9 +17,9 @@ class GeneralController extends Controller
     {
     	// Latlon.net
     	// $action = "<a href='https://www.latlong.net/c/?lat=" . $lat . "&long=" . $lon . "' target='_blank'>Location</a>";
-    	
+    	//<a href='" . route('user.map.location', ['lat' => $lat, 'lon' => $lon]) . "'>Maps</a>
     	// google search :)
-    	$action = "<a href='https://www.google.com/search?q=" . $lat . "%2C+" . $lon . "' target='_blank'>Location</a> <a href='" . route('user.map.location', ['lat' => $lat, 'lon' => $lon]) . "'>Maps</a>";
+    	$action = "<a href='https://www.google.com/search?q=" . $lat . "%2C+" . $lon . "' target='_blank'>Location</a> ";
 
     	return $action;
     }
