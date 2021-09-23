@@ -64,7 +64,7 @@
 		        serverSide: true,
 		        scrollX: true,
 		        columnDefs: [
-		          { className: "dt-center", targets: [ 0, 1, 2, 3 ] }
+		          { className: "dt-center", targets: [ 0, 1, 2, 3, 4 ] }
 		        ],
 		        ajax: "{{ route('user.show.emp.log', $emp->id) }}",
 		        columns: [
