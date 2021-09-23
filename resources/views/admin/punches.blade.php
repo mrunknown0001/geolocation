@@ -41,6 +41,7 @@
 		          	<th scope="col">Employee</th>
 		            <th scope="col">Type</th>
 		            <th scope="col">Date & Time</th>
+                <th scope="col">UUID</th>
 		            <th scope="col">IP</th>
 		            <th scope="col">Action</th>
 		          </tr>
@@ -71,7 +72,8 @@
 		        	{data: 'emp', name: 'emp'},
 	            {data: 'type', name: 'type'},
 	            {data: 'date_time', name: 'date_time'},
-	            {data: 'ip', name: 'ip'},
+              {data: 'uuid', name: 'uuid'},
+              {data: 'ip', name: 'ip'},
 	            {data: 'action', name: 'action', orderable: false, searchable: false},
 		        ]
 	      });

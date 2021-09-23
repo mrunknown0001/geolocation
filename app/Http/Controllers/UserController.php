@@ -100,6 +100,7 @@ class UserController extends Controller
                     $data->push([
                         'type' => $j->type,
                         'date_time' => date('F j, Y h:i:s A', strtotime($j->created_at)),
+                        'uuid' => $j->uuid,
                         'ip' => $j->ip_address,
                         'action' => GC::getLocation($j->latitude, $j->longitude)
                     ]);
@@ -127,6 +128,7 @@ class UserController extends Controller
                     	'emp' => $j->employee->first_name . ' ' . $j->employee->last_name,
                         'type' => $j->type,
                         'date_time' => date('F j, Y h:i:s A', strtotime($j->created_at)),
+                        'uuid' => $j->uuid,
                         'ip' => $j->ip_address,
                         'action' => GC::getLocation($j->latitude, $j->longitude)
                     ]);

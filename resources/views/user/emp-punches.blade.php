@@ -40,6 +40,7 @@
 		          <tr>
 		            <th scope="col">Type</th>
 		            <th scope="col">Date & Time</th>
+		            <th scope="col">UUID</th>
 		            <th scope="col">IP</th>
 		            <th scope="col">Action</th>
 		          </tr>
@@ -69,6 +70,7 @@
 		        columns: [
 	            {data: 'type', name: 'type'},
 	            {data: 'date_time', name: 'date_time'},
+	            {data: 'uuid', name: 'uuid'},
 	            {data: 'ip', name: 'ip'},
 	            {data: 'action', name: 'action', orderable: false, searchable: false},
 		        ]
