@@ -99,4 +99,21 @@ class GeneralController extends Controller
         $user = User::find($id);
         return strtoupper($user->last_name);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function qr()
+    {
+        return view('qr');
+    }
 }

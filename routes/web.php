@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/test', 'TestController@test');
 
+Route::get('/qr', 'GeneralController@qr');
+
 Route::get('/', function () {
     return view('login');
 });
