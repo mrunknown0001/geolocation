@@ -60,13 +60,16 @@ class EmployeeController extends Controller
     public function dashboard()
     {
     	// get login and logout today
+
         $in = EmployeeLog::where('user_id', Auth::user()->id)
                         ->where('type', 'In')
-                        ->whereDate('created_at', DB::raw('CURDATE()'))
+                        // ->whereDate('created_at', DB::raw('CURDATE()'))
+                        ->whereDate('created_at', date('Y-m-d', strtotime('+5 hours')))
                         ->first();
         $out = EmployeeLog::where('user_id', Auth::user()->id)
                         ->where('type', 'Out')
-                        ->whereDate('created_at', DB::raw('CURDATE()'))
+                        // ->whereDate('created_at', DB::raw('CURDATE()'))
+                        ->whereDate('created_at', date('Y-m-d', strtotime('+5 hours')))
                         ->first();
         // if logout if available or out, disable punch with error do on front end
 
