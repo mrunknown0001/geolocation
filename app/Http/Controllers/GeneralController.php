@@ -48,7 +48,7 @@ class GeneralController extends Controller
     public static function punchType($id)
     {
     	$log = EmployeeLog::where('user_id', $id)
-    					->whereDate('created_at', DB::raw('CURDATE()'))
+    					->whereDate('created_at', date('Y-m-d', strtotime('+8 hours')))
     					->first();
 
     	if(empty($log)) {

@@ -64,12 +64,12 @@ class EmployeeController extends Controller
         $in = EmployeeLog::where('user_id', Auth::user()->id)
                         ->where('type', 'In')
                         // ->whereDate('created_at', DB::raw('CURDATE()'))
-                        ->whereDate('created_at', date('Y-m-d', strtotime('+5 hours')))
+                        ->whereDate('created_at', date('Y-m-d', strtotime('8 hours')))
                         ->first();
         $out = EmployeeLog::where('user_id', Auth::user()->id)
                         ->where('type', 'Out')
                         // ->whereDate('created_at', DB::raw('CURDATE()'))
-                        ->whereDate('created_at', date('Y-m-d', strtotime('+5 hours')))
+                        ->whereDate('created_at', date('Y-m-d', strtotime('+8 hours')))
                         ->first();
         // if logout if available or out, disable punch with error do on front end
 
@@ -86,7 +86,7 @@ class EmployeeController extends Controller
     	if($request->ajax()) {
             $out = EmployeeLog::where('user_id', Auth::user()->id)
                             ->where('type', 'Out')
-                            ->whereDate('created_at', date('Y-m-d', strtotime('+5 hours')))
+                            ->whereDate('created_at', date('Y-m-d', strtotime('+8 hours')))
                             ->first();
             if(!empty($out)) {
                 return abort(500);
@@ -155,7 +155,7 @@ class EmployeeController extends Controller
     {
         $in = EmployeeLog::where('user_id', Auth::user()->id)
                         ->where('type', 'In')
-                        ->whereDate('created_at', DB::raw('CURDATE()'))
+                        ->whereDate('created_at', date('Y-m-d', strtotime('+8 hours')))
                         ->first();
         return date('H:i:s A', strtotime($in->created_at));
     }
@@ -165,7 +165,7 @@ class EmployeeController extends Controller
     {
         $out = EmployeeLog::where('user_id', Auth::user()->id)
                         ->where('type', 'Out')
-                        ->whereDate('created_at', DB::raw('CURDATE()'))
+                        ->whereDate('created_at', date('Y-m-d', strtotime('+8 hours')))
                         ->first();
         return date('H:i:s A', strtotime($out->created_at));
     }
