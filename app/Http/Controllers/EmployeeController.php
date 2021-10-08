@@ -86,7 +86,7 @@ class EmployeeController extends Controller
     	if($request->ajax()) {
             $out = EmployeeLog::where('user_id', Auth::user()->id)
                             ->where('type', 'Out')
-                            ->whereDate('created_at', DB::raw('CURDATE()'))
+                            ->whereDate('created_at', date('Y-m-d', strtotime('+5 hours')))
                             ->first();
             if(!empty($out)) {
                 return abort(500);
